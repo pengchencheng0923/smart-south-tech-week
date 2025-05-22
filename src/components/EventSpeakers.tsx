@@ -1,6 +1,7 @@
 
 import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
 
 const EventSpeakers = () => {
@@ -25,27 +26,27 @@ const EventSpeakers = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">特邀嘉宾</h2>
+      <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500 text-center">特邀嘉宾</h2>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="md:hidden">
+        <Carousel className="w-full">
+          <CarouselContent>
+            {speakers.map((speaker) => (
+              <CarouselItem key={speaker.id}>
+                <SpeakerCard speaker={speaker} />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex justify-center mt-4 gap-2">
+            <CarouselPrevious className="relative static transform-none bg-white/10 hover:bg-white/20" />
+            <CarouselNext className="relative static transform-none bg-white/10 hover:bg-white/20" />
+          </div>
+        </Carousel>
+      </div>
+      
+      <div className="hidden md:grid md:grid-cols-2 gap-8">
         {speakers.map((speaker) => (
-          <Card key={speaker.id} className="bg-white/5 backdrop-blur-sm border-none overflow-hidden h-full">
-            <div className="h-48 overflow-hidden">
-              <img 
-                src={speaker.image} 
-                alt={speaker.name}
-                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-              />
-            </div>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">{speaker.name}</CardTitle>
-              <CardDescription className="text-gray-300">{speaker.title}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <h4 className="font-medium text-blue-400 mb-2">主题: {speaker.topic}</h4>
-              <p className="text-sm text-gray-300">{speaker.bio}</p>
-            </CardContent>
-          </Card>
+          <SpeakerCard key={speaker.id} speaker={speaker} />
         ))}
       </div>
       
@@ -54,6 +55,47 @@ const EventSpeakers = () => {
         <p className="text-sm text-gray-400 mt-2">更多嘉宾信息将持续更新</p>
       </div>
     </div>
+  );
+};
+
+interface SpeakerProps {
+  speaker: {
+    id: number;
+    name: string;
+    title: string;
+    image: string;
+    bio: string;
+    topic: string;
+  }
+}
+
+const SpeakerCard: React.FC<SpeakerProps> = ({ speaker }) => {
+  return (
+    <Card className="bg-white/5 backdrop-blur-sm border-none overflow-hidden h-full transition-all duration-500 hover:bg-white/10 hover:shadow-lg transform hover:scale-[1.02]">
+      <div className="h-48 overflow-hidden relative group">
+        <img 
+          src={speaker.image} 
+          alt={speaker.name}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-purple-900/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+          <Badge className="bg-gradient-to-r from-blue-500 to-purple-500">
+            特邀嘉宾
+          </Badge>
+        </div>
+      </div>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400 text-2xl">{speaker.name}</CardTitle>
+        <CardDescription className="text-gray-300">{speaker.title}</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <h4 className="font-medium text-blue-400 mb-2 flex items-center">
+          <span className="inline-block w-2 h-2 rounded-full bg-blue-400 mr-2 animate-pulse"></span>
+          主题: {speaker.topic}
+        </h4>
+        <p className="text-sm text-gray-300 line-clamp-4 hover:line-clamp-none transition-all duration-300">{speaker.bio}</p>
+      </CardContent>
+    </Card>
   );
 };
 

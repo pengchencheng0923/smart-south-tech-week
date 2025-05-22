@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { 
   Clock, 
   MapPin, 
@@ -46,6 +46,8 @@ const Index = () => {
     minutes: 0,
     seconds: 0
   });
+  const [activeTab, setActiveTab] = useState("schedule");
+  const tabsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Calculate days left until the event
@@ -86,8 +88,12 @@ const Index = () => {
   }, []);
 
   const handleRegister = () => {
-    toast.success("Registration information copied!", {
-      description: "You can now paste the QR code to register for the event.",
+    setActiveTab("register");
+    if (tabsRef.current) {
+      tabsRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+    toast.success("正在前往报名页面", {
+      description: "请扫描二维码完成报名",
     });
   };
 
@@ -110,7 +116,7 @@ const Index = () => {
         
         <div className="container mx-auto px-4 py-16 relative z-10">
           <div className="flex flex-col items-center text-center mb-8 animate-fade-in">
-            <Badge variant="secondary" className="mb-4 text-lg px-4 py-1">
+            <Badge variant="secondary" className="mb-4 text-lg px-4 py-1 animate-pulse">
               科技创新 引领未来
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
@@ -121,15 +127,15 @@ const Index = () => {
             </p>
             
             <div className="flex flex-wrap justify-center gap-4 mb-8">
-              <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 transition-all duration-300 hover:bg-white/20">
                 <Calendar className="h-5 w-5 text-blue-400" />
                 <span>{eventInfo.date}</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 transition-all duration-300 hover:bg-white/20">
                 <Clock className="h-5 w-5 text-blue-400" />
                 <span>{eventInfo.time}</span>
               </div>
-              <div className="flex items-center gap-2 bg-white/10 rounded-full px-4 py-2">
+              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 transition-all duration-300 hover:bg-white/20">
                 <MapPin className="h-5 w-5 text-blue-400" />
                 <span>{eventInfo.location}</span>
               </div>
@@ -137,14 +143,14 @@ const Index = () => {
             
             <Button 
               onClick={handleRegister}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-6 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-6 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:translate-y-[-2px]"
             >
               立即报名参加
             </Button>
           </div>
           
           {/* Countdown Card */}
-          <Card className="mx-auto max-w-md bg-white/10 backdrop-blur-lg border-none text-white mb-8">
+          <Card className="mx-auto max-w-md bg-white/10 backdrop-blur-lg border-none text-white mb-8 transform hover:scale-[1.02] transition-transform duration-300">
             <CardHeader>
               <CardTitle>距离活动开始还有</CardTitle>
               <CardDescription className="text-gray-300">活动准备就绪，期待您的参与</CardDescription>
@@ -152,19 +158,19 @@ const Index = () => {
             <CardContent>
               <div className="flex justify-between mb-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.days}</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16 transform transition-all duration-500 hover:shadow-glow hover:bg-white/20">{countdown.days}</div>
                   <div className="text-xs text-gray-300 mt-1">天</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.hours}</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16 transform transition-all duration-500 hover:shadow-glow hover:bg-white/20">{countdown.hours}</div>
                   <div className="text-xs text-gray-300 mt-1">小时</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.minutes}</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16 transform transition-all duration-500 hover:shadow-glow hover:bg-white/20">{countdown.minutes}</div>
                   <div className="text-xs text-gray-300 mt-1">分钟</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.seconds}</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16 transform transition-all duration-500 hover:shadow-glow hover:bg-white/20">{countdown.seconds}</div>
                   <div className="text-xs text-gray-300 mt-1">秒</div>
                 </div>
               </div>
@@ -175,23 +181,29 @@ const Index = () => {
       </div>
       
       {/* Content Tabs */}
-      <div className="container mx-auto px-4 py-12">
-        <Tabs defaultValue="schedule" className="w-full">
+      <div ref={tabsRef} className="container mx-auto px-4 py-12">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3 mb-8 h-16 text-lg">
-            <TabsTrigger value="schedule" className="text-lg font-medium">活动日程</TabsTrigger>
-            <TabsTrigger value="speakers" className="text-lg font-medium">特邀嘉宾</TabsTrigger>
-            <TabsTrigger value="register" className="text-lg font-medium">报名参加</TabsTrigger>
+            <TabsTrigger value="schedule" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+              活动日程
+            </TabsTrigger>
+            <TabsTrigger value="speakers" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+              特邀嘉宾
+            </TabsTrigger>
+            <TabsTrigger value="register" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+              报名参加
+            </TabsTrigger>
           </TabsList>
           
-          <TabsContent value="schedule" className="bg-white/5 backdrop-blur-md rounded-lg p-6">
+          <TabsContent value="schedule" className="bg-white/5 backdrop-blur-md rounded-lg p-6 animate-fade-in">
             <EventSchedule />
           </TabsContent>
           
-          <TabsContent value="speakers" className="bg-white/5 backdrop-blur-md rounded-lg p-6">
+          <TabsContent value="speakers" className="bg-white/5 backdrop-blur-md rounded-lg p-6 animate-fade-in">
             <EventSpeakers />
           </TabsContent>
           
-          <TabsContent value="register" className="bg-white/5 backdrop-blur-md rounded-lg p-6">
+          <TabsContent value="register" className="bg-white/5 backdrop-blur-md rounded-lg p-6 animate-fade-in">
             <QRCodeSection contactPerson={eventInfo.contactPerson} contactPhone={eventInfo.contactPhone} />
           </TabsContent>
         </Tabs>
@@ -209,7 +221,7 @@ const Index = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="p-2 bg-white/10 rounded-full">
+                    <div className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-300">
                       <User className="h-5 w-5" />
                     </div>
                   </TooltipTrigger>
@@ -222,7 +234,7 @@ const Index = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="p-2 bg-white/10 rounded-full">
+                    <div className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-300">
                       <MessageCircle className="h-5 w-5" />
                     </div>
                   </TooltipTrigger>
@@ -235,7 +247,7 @@ const Index = () => {
               <TooltipProvider>
                 <Tooltip>
                   <TooltipTrigger>
-                    <div className="p-2 bg-white/10 rounded-full">
+                    <div className="p-2 bg-white/10 rounded-full hover:bg-white/20 transition-colors duration-300">
                       <Users className="h-5 w-5" />
                     </div>
                   </TooltipTrigger>
