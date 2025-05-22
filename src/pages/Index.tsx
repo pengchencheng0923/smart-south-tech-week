@@ -143,9 +143,14 @@ const Index = () => {
             
             <Button 
               onClick={handleRegister}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-6 rounded-lg text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:translate-y-[-2px]"
+              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white 
+                px-10 py-7 rounded-lg text-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 
+                transform hover:scale-105 hover:translate-y-[-2px] relative overflow-hidden 
+                group animate-pulse"
             >
-              立即报名参加
+              <span className="relative z-10">立即报名参加</span>
+              <span className="absolute inset-0 bg-gradient-to-r from-pink-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></span>
+              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse z-0"></span>
             </Button>
           </div>
           
@@ -174,7 +179,7 @@ const Index = () => {
                   <div className="text-xs text-gray-300 mt-1">秒</div>
                 </div>
               </div>
-              <Progress value={progress} className="h-2 bg-gray-700" />
+              <Progress value={progress} className="h-3 bg-gray-700" />
             </CardContent>
           </Card>
         </div>
@@ -183,14 +188,14 @@ const Index = () => {
       {/* Content Tabs */}
       <div ref={tabsRef} className="container mx-auto px-4 py-12">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8 h-16 text-lg">
-            <TabsTrigger value="schedule" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+          <TabsList className="grid w-full grid-cols-3 mb-8 h-20 text-xl">
+            <TabsTrigger value="schedule" className="text-xl font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
               活动日程
             </TabsTrigger>
-            <TabsTrigger value="speakers" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+            <TabsTrigger value="speakers" className="text-xl font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
               特邀嘉宾
             </TabsTrigger>
-            <TabsTrigger value="register" className="text-lg font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
+            <TabsTrigger value="register" className="text-xl font-medium transition-all duration-300 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500/50 data-[state=active]:to-purple-600/50">
               报名参加
             </TabsTrigger>
           </TabsList>
