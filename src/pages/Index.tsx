@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { 
   Clock, 
@@ -40,20 +39,49 @@ import { toast } from "@/components/ui/sonner";
 
 const Index = () => {
   const [progress, setProgress] = useState(0);
-  const [daysLeft, setDaysLeft] = useState(0);
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
 
   useEffect(() => {
     // Calculate days left until the event
     const eventDate = new Date('2025-05-27T09:30:00');
-    const today = new Date();
-    const diffTime = eventDate.getTime() - today.getTime();
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    setDaysLeft(diffDays > 0 ? diffDays : 0);
     
-    // Animate progress bar
-    const timer = setTimeout(() => setProgress(100), 500);
+    // Update countdown every second
+    const updateCountdown = () => {
+      const now = new Date();
+      const diffTime = eventDate.getTime() - now.getTime();
+      
+      if (diffTime <= 0) {
+        // Event has already started
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setProgress(100);
+        return;
+      }
+      
+      // Calculate time units
+      const days = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diffTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+      
+      setCountdown({ days, hours, minutes, seconds });
+      
+      // Calculate progress: 100% when event starts, 0% when it's a month away
+      const totalDuration = 30 * 24 * 60 * 60 * 1000; // 30 days in ms
+      const elapsed = totalDuration - Math.min(diffTime, totalDuration);
+      const progressPercentage = Math.floor((elapsed / totalDuration) * 100);
+      setProgress(progressPercentage);
+    };
     
-    return () => clearTimeout(timer);
+    // Call immediately and set interval
+    updateCountdown();
+    const intervalId = setInterval(updateCountdown, 1000);
+    
+    return () => clearInterval(intervalId);
   }, []);
 
   const handleRegister = () => {
@@ -123,20 +151,20 @@ const Index = () => {
             <CardContent>
               <div className="flex justify-between mb-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold">{daysLeft}</div>
-                  <div className="text-xs text-gray-300">天</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.days}</div>
+                  <div className="text-xs text-gray-300 mt-1">天</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">9</div>
-                  <div className="text-xs text-gray-300">小时</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.hours}</div>
+                  <div className="text-xs text-gray-300 mt-1">小时</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">30</div>
-                  <div className="text-xs text-gray-300">分钟</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.minutes}</div>
+                  <div className="text-xs text-gray-300 mt-1">分钟</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">0</div>
-                  <div className="text-xs text-gray-300">秒</div>
+                  <div className="text-3xl font-bold bg-white/10 backdrop-blur-sm p-3 rounded-lg min-w-16">{countdown.seconds}</div>
+                  <div className="text-xs text-gray-300 mt-1">秒</div>
                 </div>
               </div>
               <Progress value={progress} className="h-2 bg-gray-700" />
