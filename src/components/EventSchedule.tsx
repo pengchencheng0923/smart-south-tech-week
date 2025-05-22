@@ -45,7 +45,7 @@ const EventSchedule = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-6">活动日程安排</h2>
+      <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">活动日程安排</h2>
       
       <div className="relative">
         <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-500 to-purple-500"></div>
@@ -64,13 +64,13 @@ const EventSchedule = () => {
                     第{index + 1}阶段
                   </Badge>
                 </div>
-                <CardTitle className="text-xl">{item.title}</CardTitle>
+                <CardTitle className="text-xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">{item.title}</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="flex flex-col space-y-2">
                   <div className="flex items-center">
                     <span className="text-gray-400 mr-2">分享人:</span>
-                    <span className="font-semibold">{item.speaker}</span>
+                    <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-purple-400">{item.speaker}</span>
                   </div>
                   {item.description && (
                     <p className="text-gray-300 text-sm">{item.description}</p>

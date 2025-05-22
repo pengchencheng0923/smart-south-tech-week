@@ -21,7 +21,7 @@ const QRCodeSection: React.FC<QRCodeSectionProps> = ({ contactPerson, contactPho
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div>
-        <h2 className="text-2xl font-bold mb-6">报名参加</h2>
+        <h2 className="text-3xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">报名参加</h2>
         <div className="space-y-4">
           <p>请各部门、司属各单位于5月26日15:00前在综管中南π中进行报名或直接扫描二维码进行报名。</p>
           
@@ -63,13 +63,12 @@ const QRCodeSection: React.FC<QRCodeSectionProps> = ({ contactPerson, contactPho
         </CardHeader>
         <CardContent className="flex justify-center">
           <div className="relative w-64 h-64 bg-white p-4 rounded-lg">
-            {/* Placeholder QR Code - will be replaced later */}
-            <div className="w-full h-full border-2 border-dashed border-gray-300 flex items-center justify-center bg-gray-50">
-              <div className="text-center">
-                <p className="text-gray-500 text-sm">二维码占位图</p>
-                <p className="text-gray-400 text-xs mt-2">实际二维码将在后续更换</p>
-              </div>
-            </div>
+            {/* Updated QR Code with the provided image */}
+            <img 
+              src="/lovable-uploads/9a2bacf8-c11a-44a2-a1b1-0d06d327aaab.png" 
+              alt="活动报名二维码"
+              className="w-full h-full object-contain"
+            />
             <div className="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
               扫码报名
             </div>

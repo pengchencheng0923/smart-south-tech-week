@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { 
   Clock, 
@@ -176,10 +177,10 @@ const Index = () => {
       {/* Content Tabs */}
       <div className="container mx-auto px-4 py-12">
         <Tabs defaultValue="schedule" className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="schedule">活动日程</TabsTrigger>
-            <TabsTrigger value="speakers">特邀嘉宾</TabsTrigger>
-            <TabsTrigger value="register">报名参加</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3 mb-8 h-16 text-lg">
+            <TabsTrigger value="schedule" className="text-lg font-medium">活动日程</TabsTrigger>
+            <TabsTrigger value="speakers" className="text-lg font-medium">特邀嘉宾</TabsTrigger>
+            <TabsTrigger value="register" className="text-lg font-medium">报名参加</TabsTrigger>
           </TabsList>
           
           <TabsContent value="schedule" className="bg-white/5 backdrop-blur-md rounded-lg p-6">
