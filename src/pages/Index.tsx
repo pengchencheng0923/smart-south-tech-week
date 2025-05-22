@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { 
   Clock, 
@@ -143,14 +142,12 @@ const Index = () => {
             
             <Button 
               onClick={handleRegister}
-              className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white 
-                px-10 py-7 rounded-lg text-xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 
-                transform hover:scale-105 hover:translate-y-[-2px] relative overflow-hidden 
-                group animate-pulse"
+              variant="gradient"
+              size="xl"
+              className="font-semibold shadow-lg transform hover:translate-y-[-2px] relative overflow-hidden before:content-[''] before:absolute before:top-0 before:left-[-100%] before:w-[100%] before:h-full before:bg-white/20 before:skew-x-[45deg] hover:before:animate-shine"
             >
-              <span className="relative z-10">立即报名参加</span>
-              <span className="absolute inset-0 bg-gradient-to-r from-pink-500 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></span>
-              <span className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 animate-pulse z-0"></span>
+              立即报名参加
+              <span className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent transform translate-x-[-100%] animate-shimmer"></span>
             </Button>
           </div>
           
